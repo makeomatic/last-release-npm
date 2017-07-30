@@ -15,12 +15,6 @@
     "url": "https://github.com/makeomatic/last-release-npm/issues"
   },
   "config": {
-    "nyc": {
-      "exclude": [
-        ".test",
-        "node_modules"
-      ]
-    },
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [],
