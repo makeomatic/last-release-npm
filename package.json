@@ -75,6 +75,7 @@
   "scripts": {
     "build": "rimraf dist && mkdirp dist && babel src --out-dir dist",
     "build:tests": "rimraf .test && mkdirp .test && babel test --out-dir .test",
+    "prepublishOnly": "npm run build",
     "coverage": "nyc report",
     "coverage:upload": "npm run coverage -- --reporter=text-lcov | coveralls",
     "pretest:suite": "npm run build && npm run build:tests",
