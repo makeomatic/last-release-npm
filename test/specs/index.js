@@ -11,7 +11,7 @@ const npm = {
 }
 
 test('last release from registry', (t) => {
-  t.plan(7)
+  t.plan(8)
 
   t.test('get release from package name', (tt) => {
     lastRelease({}, {
@@ -130,6 +130,20 @@ test('last release from registry', (t) => {
         ttt.is(release.version, undefined, 'no version')
         ttt.end()
       })
+    })
+  })
+
+  t.test('get gitHead from previously released tag', (tt) => {
+    lastRelease({}, {
+      pkg: {name: 'missingGitHead'},
+      npm
+    }, (err, release) => {
+      tt.error(err)
+      tt.is(release.version, '3.0.3', 'version')
+      tt.is(release.gitHead, 'v3.0.3', 'gitHead')
+      tt.is(release.tag, 'latest', 'dist-tag')
+
+      tt.end()
     })
   })
 })

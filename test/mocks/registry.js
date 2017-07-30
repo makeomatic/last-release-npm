@@ -25,6 +25,18 @@ const completelyUnpublishedModule = {
   }
 }
 
+const missingGitHead = {
+  'dist-tags': {
+    latest: '3.0.3'
+  },
+  versions: {
+    '3.0.2': {
+      gitHead: 'hash'
+    },
+    '3.0.3': {}
+  }
+}
+
 module.exports = nock('http://registry.npmjs.org')
   .get('/available')
   .reply(200, availableModule)
@@ -37,6 +49,8 @@ module.exports = nock('http://registry.npmjs.org')
   .reply(200, availableModule)
   .get('/completely-unpublished')
   .reply(200, completelyUnpublishedModule)
+  .get('/missingGitHead')
+  .reply(200, missingGitHead)
   .get('/unavailable')
   .reply(404, {})
   .get('/unavailable-no-body')

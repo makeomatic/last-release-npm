@@ -38,13 +38,21 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
 Tag a version manually or define "fallbackTags".`, 'ENODISTTAG'))
     }
 
-    cb(null, {
+    const output = {
       version,
       gitHead: data.versions[version].gitHead,
       get tag () {
         npmlog.warn('deprecated', 'tag will be removed with the next major release')
         return npm.tag
       }
-    })
+    }
+
+    if (output.gitHead === undefined && output.version !== undefined) {
+      npmlog.warn(`NPM registry does not contain "gitHead" in latest package version data.
+      It's probably because the publish happened outside of repository folder. Will try last version's Git tag instead`)
+      output.gitHead = `v${output.version}`
+    }
+
+    cb(null, output)
   })
 }
